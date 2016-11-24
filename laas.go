@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 )
@@ -10,7 +11,8 @@ import (
 func LaasHandler(w http.ResponseWriter, r *http.Request) {
 	duration, err := time.ParseDuration(r.FormValue("duration"))
 	if err != nil {
-		fmt.Fprint(w, err)
+		log.Println(err)
+		http.Error(w, err.Error(), 400)
 	} else {
 		time.Sleep(duration)
 		fmt.Fprint(w, "OK")
